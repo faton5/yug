@@ -15,8 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Tous les champs sont obligatoires.");
     }
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!validateEmail($email)) {
         die("Email invalide.");
+    }
+
+    if (!validatePassword($password)) {
+        die("Mot de passe invalide (8-64 car., minuscule, majuscule, chiffre, caractere special).");
     }
 
     if ($password !== $passwordConfirm) {
@@ -28,8 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $roleId = ROLE_USER; // rôle par défaut "user" (voir table roles)
 
-    if (creerUtilisateur($pdo, $nom, $email, $passwordHash, $adresse)) {
+    if (creerUtilisateur($pdo, $nom, $email, $passwordHash, $adresse, $roleId)) {
         echo "Inscription réussie. <a href='login.php'>Se connecter</a>";
     } else {
         echo "Erreur lors de l'inscription.";

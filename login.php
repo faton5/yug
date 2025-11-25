@@ -12,6 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Veuillez remplir tous les champs.");
     }
 
+    if (!validateEmail($email)) {
+        die("Email invalide.");
+    }
+
+    if (!validatePassword($password)) {
+        die("Mot de passe invalide (8-64 car., minuscule, majuscule, chiffre, caractere special).");
+    }
+
     $user = getUserByEmail($pdo, $email);
 
     if (!$user) {
@@ -24,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_nom'] = $user['nom'];
+    $_SESSION['user_role_id'] = isset($user['role_id']) ? (int)$user['role_id'] : null;
+    $_SESSION['user_role_name'] = $user['role_name'] ?? 'user';
 
     header("Location: tableau.php");
     exit;

@@ -32,10 +32,14 @@ requireLogin();
             <section class="hero">
                 <div class="eyebrow">Bienvenue</div>
                 <h2>Salut <?php echo htmlspecialchars($_SESSION['user_nom']); ?> ?</h2>
+                <p>Rôle : <?php echo htmlspecialchars($_SESSION['user_role_name'] ?? 'user'); ?></p>
                 <p>Moi c'est Yoann</p>
                 <div class="actions">
                     <a class="btn" href="logout.php">Se déconnecter</a>
                     <a class="btn" href="delete.php">Supprimer le compte</a>
+                    <?php if (isAdmin()): ?>
+                        <a class="btn" href="admin_users.php">Admin utilisateurs</a>
+                    <?php endif; ?>
                     <a class="btn secondary" href="index.html">Retour accueil</a>
                 </div>
             </section>

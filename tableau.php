@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "fonctions.php";
+// Tableau de bord : accessible uniquement aux utilisateurs connectés
 requireLogin();
 ?>
 

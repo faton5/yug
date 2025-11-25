@@ -2,13 +2,13 @@
 
 // Role constants mapped to table roles (1 = admin, 2 = user)
 if (!defined('ROLE_ADMIN')) {
-    define('ROLE_ADMIN', 1);
+    define('ROLE_ADMIN', 1); // 1 correspond au role admin dans la table roles
 }
 if (!defined('ROLE_USER')) {
-    define('ROLE_USER', 2);
+    define('ROLE_USER', 2); // 2 correspond au role user dans la table roles
 }
 
-// PDO connection to database (exceptions enabled, UTF-8, no emulation)
+// Ouvre une connexion PDO vers la BDD (UTF-8, exceptions, pas d'emulation)
 function getDB() {
     $host = "localhost";
     $dbname = "mysql";
@@ -31,51 +31,57 @@ function getDB() {
     }
 }
 
-// Email validation via regex (simple but effective for common cases)
+// Vérifie le format email (regex simple couvrant les cas usuels)
 function validateEmail($email) {
     return (bool) preg_match('/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i', $email);
 }
 
-// Password validation: 8-64 chars, lowercase, uppercase, digit, special char
+// Valide le mot de passe (8-64 chars, min/maj, chiffre, spécial)
 function validatePassword($password) {
     return (bool) preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,64}$/', $password);
 }
 
-// Check if an email already exists
+// Vérifie si un email existe déjà
 function emailExiste($pdo, $email) {
+    // Requete simple pour savoir si l'email est deja present
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);
     return $stmt->rowCount() > 0;
 }
 
-// Insert a user with a role (default user)
+// Crée un utilisateur avec role (user par défaut)
 function creerUtilisateur($pdo, $nom, $email, $passwordHash, $adresse, $roleId = ROLE_USER) {
+    // role_id reference la table roles (1=admin, 2=user)
     $stmt = $pdo->prepare("INSERT INTO users (nom, email, password, adresse, role_id) VALUES (?, ?, ?, ?, ?)");
     return $stmt->execute([$nom, $email, $passwordHash, $adresse, $roleId]);
 }
 
-// Fetch a user by email (with role join)
+// Récupère un utilisateur via son email (avec nom de rôle)
 function getUserByEmail($pdo, $email) {
+    // LEFT JOIN pour recuperer le nom du role; l'utilisateur revient meme si role manquant
     $stmt = $pdo->prepare("SELECT u.*, r.role_name FROM users u LEFT JOIN roles r ON u.role_id = r.id WHERE u.email = ?");
     $stmt->execute([$email]);
     return $stmt->fetch();
 }
 
-// Fetch a user by id (with role join)
+// Récupère un utilisateur via son id (avec nom de rôle)
 function getUserById($pdo, $id) {
+    // Equivalent de getUserByEmail mais sur l'id
     $stmt = $pdo->prepare("SELECT u.*, r.role_name FROM users u LEFT JOIN roles r ON u.role_id = r.id WHERE u.id = ?");
     $stmt->execute([$id]);
     return $stmt->fetch();
 }
 
-// List all users with their roles
+// Liste tous les utilisateurs avec leurs rôles
 function getAllUsers($pdo) {
+    // Classement du plus recent (id desc) pour faciliter l'affichage admin
     $stmt = $pdo->query("SELECT u.*, r.role_name FROM users u LEFT JOIN roles r ON u.role_id = r.id ORDER BY u.id DESC");
     return $stmt->fetchAll();
 }
 
-// Update a user; passwordHash optional (if null, keep existing password)
+// Met à jour un utilisateur; mot de passe optionnel si null
 function updateUser($pdo, $id, $nom, $email, $adresse, $roleId, $passwordHash = null) {
+    // Si pas de nouveau mot de passe, on ne touche pas au champ password
     if ($passwordHash === null) {
         $stmt = $pdo->prepare("UPDATE users SET nom = ?, email = ?, adresse = ?, role_id = ? WHERE id = ?");
         return $stmt->execute([$nom, $email, $adresse, $roleId, $id]);
@@ -84,8 +90,9 @@ function updateUser($pdo, $id, $nom, $email, $adresse, $roleId, $passwordHash = 
     return $stmt->execute([$nom, $email, $adresse, $roleId, $passwordHash, $id]);
 }
 
-// Delete a user by id
+// Supprime un utilisateur (a utiliser coté admin)
 function deleteUserById($pdo, $id) {
+    // Suppression brute; a proteger par un controle d'acces (admin)
     $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
     $stmt->execute([$id]);
 }
@@ -100,7 +107,7 @@ function isAdmin() {
     return isset($_SESSION['user_role_id']) && (int) $_SESSION['user_role_id'] === ROLE_ADMIN;
 }
 
-// Require login
+// Redirige vers login si non connecté
 function requireLogin() {
     if (!isLogged()) {
         header("Location: login.php");
@@ -108,7 +115,7 @@ function requireLogin() {
     }
 }
 
-// Require admin
+// Redirige vers tableau si non admin
 function requireAdmin() {
     if (!isAdmin()) {
         header("Location: tableau.php");
@@ -116,7 +123,7 @@ function requireAdmin() {
     }
 }
 
-// Delete account (used by self-delete route)
+// Supprime le compte courant (utilisé par delete.php)
 function deleteAccount($pdo, $id) {
     deleteUserById($pdo, $id);
 }

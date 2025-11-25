@@ -2,9 +2,11 @@
 session_start();
 require "fonctions.php";
 
+// Page de connexion : vérifie les identifiants et enregistre le rôle en session
 $pdo = getDB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Sanitize/validation des champs
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
 
@@ -20,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Mot de passe invalide (8-64 car., minuscule, majuscule, chiffre, caractere special).");
     }
 
+    // Recherche de l'utilisateur puis vérification du mot de passe hashé
     $user = getUserByEmail($pdo, $email);
 
     if (!$user) {
@@ -32,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['user_nom'] = $user['nom'];
+    // Stocke role en session pour les controles d'acces
     $_SESSION['user_role_id'] = isset($user['role_id']) ? (int)$user['role_id'] : null;
     $_SESSION['user_role_name'] = $user['role_name'] ?? 'user';
 

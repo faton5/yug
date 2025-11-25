@@ -2,9 +2,11 @@
 session_start();
 require "fonctions.php";
 
+// Page d'inscription : crée un compte role user par défaut après validations
 $pdo = getDB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupération et nettoyage des champs
     $nom = trim($_POST['nom']);
     $email = trim($_POST['email']);
     $adresse = trim($_POST['adresse']);
@@ -32,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-    $roleId = ROLE_USER; // rôle par défaut "user" (voir table roles)
+    $roleId = ROLE_USER; // role par defaut "user" (voir table roles)
 
     if (creerUtilisateur($pdo, $nom, $email, $passwordHash, $adresse, $roleId)) {
         echo "Inscription réussie. <a href='login.php'>Se connecter</a>";

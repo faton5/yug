@@ -2,9 +2,9 @@
 session_start();
 require "fonctions.php";
 
-// Accessible aux connectes; affiche un message different selon le role
+// Page de diagnostic : accessible aux connectés, indique si le rôle est admin ou non
 requireLogin();
-$isAdmin = isAdmin();
+$isAdmin = isAdmin(); // True si role_id = ROLE_ADMIN
 ?>
 <!DOCTYPE html>
 <html lang="fr">

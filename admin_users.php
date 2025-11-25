@@ -2,7 +2,7 @@
 session_start();
 require "fonctions.php";
 
-// Protect admin area
+// Zone admin : nécessite connexion + rôle admin
 requireLogin();
 requireAdmin();
 
@@ -10,10 +10,11 @@ $pdo = getDB();
 $errors = [];
 $success = null;
 
-// Handle create/update/delete actions
-$action = $_POST['action'] ?? null;
+// Détermine l'action demandée
+$action = $_POST['action'] ?? null; // create|update|delete
 
 if ($action === 'create') {
+    // Création d'un utilisateur (admin ou user) avec validation basique
     $nom = trim($_POST['nom'] ?? '');
     $email = trim($_POST['email'] ?? '');
     $adresse = trim($_POST['adresse'] ?? '');
@@ -44,6 +45,7 @@ if ($action === 'create') {
 }
 
 if ($action === 'update') {
+    // Edition d'un utilisateur; mot de passe optionnel
     $id = (int)($_POST['id'] ?? 0);
     $nom = trim($_POST['nom'] ?? '');
     $email = trim($_POST['email'] ?? '');
@@ -87,6 +89,7 @@ if ($action === 'update') {
 }
 
 if ($action === 'delete') {
+    // Suppression protégée (on ne supprime pas soi-même ici)
     $id = (int)($_POST['id'] ?? 0);
     if ($id === (int)($_SESSION['user_id'] ?? 0)) {
         $errors[] = "Impossible de supprimer votre propre compte ici.";
@@ -154,6 +157,7 @@ $users = getAllUsers($pdo);
 
         <section class="card">
             <h3>Utilisateurs</h3>
+            <!-- Liste + formulaires inline pour modifier/supprimer chaque utilisateur -->
             <table>
                 <thead>
                     <tr>

@@ -107,29 +107,19 @@ $users = getAllUsers($pdo);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Gestion utilisateurs</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .stack { display: grid; gap: 12px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }
-        form.inline { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-        .errors { color: #b00020; }
-        .success { color: #0a7c1f; }
-        input[type=text], input[type=email], input[type=password], select { padding: 6px; }
-        button { padding: 6px 10px; }
-    </style>
+    <!-- Aucun CSS chargé -->
 </head>
 <body>
     <header class="topbar">
-        <div class="brand"><span class="orb"></span><span>Admin</span></div>
-        <nav class="nav-links">
-            <a href="tableau.php">Tableau</a>
+        <div class="brand"><span>Admin</span></div>
+        <nav>
+            <a href="tableau.php">Tableau</a> |
             <a href="logout.php">Déconnexion</a>
         </nav>
     </header>
 
     <main class="page">
-        <section class="card">
+        <section>
             <h3>Créer un utilisateur</h3>
             <?php if ($errors): ?>
                 <div class="errors">
@@ -141,7 +131,7 @@ $users = getAllUsers($pdo);
             <?php if ($success): ?>
                 <div class="success"><?php echo htmlspecialchars($success); ?></div>
             <?php endif; ?>
-            <form method="POST" class="stack">
+            <form method="POST">
                 <input type="hidden" name="action" value="create">
                 <input type="text" name="nom" placeholder="Nom" required>
                 <input type="email" name="email" placeholder="Email" required>
@@ -155,7 +145,7 @@ $users = getAllUsers($pdo);
             </form>
         </section>
 
-        <section class="card">
+        <section>
             <h3>Utilisateurs</h3>
             <!-- Liste + formulaires inline pour modifier/supprimer chaque utilisateur -->
             <table>
@@ -173,7 +163,7 @@ $users = getAllUsers($pdo);
                             <td><?php echo htmlspecialchars($u['adresse']); ?></td>
                             <td><?php echo htmlspecialchars($u['role_name'] ?? $u['role_id']); ?></td>
                             <td>
-                                <form method="POST" class="inline">
+                                <form method="POST">
                                     <input type="hidden" name="action" value="update">
                                     <input type="hidden" name="id" value="<?php echo (int)$u['id']; ?>">
                                     <input type="text" name="nom" value="<?php echo htmlspecialchars($u['nom']); ?>" required>
@@ -186,7 +176,7 @@ $users = getAllUsers($pdo);
                                     </select>
                                     <button type="submit">Mettre à jour</button>
                                 </form>
-                                <form method="POST" onsubmit="return confirm('Supprimer cet utilisateur ?');" style="margin-top:4px;">
+                                <form method="POST" onsubmit="return confirm('Supprimer cet utilisateur ?');">
                                     <input type="hidden" name="action" value="delete">
                                     <input type="hidden" name="id" value="<?php echo (int)$u['id']; ?>">
                                     <button type="submit">Supprimer</button>

@@ -50,12 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Yoann</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="nebula-dot" style="left: 10%; top: 15%;"></div>
-    <div class="nebula-dot secondary" style="right: 8%; bottom: 22%;"></div>
-
     <header class="topbar">
         <div class="brand">
             <span class="orb"></span>

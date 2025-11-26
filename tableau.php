@@ -11,12 +11,8 @@ requireLogin();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de bord - Yoann</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="nebula-dot" style="left: 12%; top: 18%;"></div>
-    <div class="nebula-dot secondary" style="right: 12%; bottom: 18%;"></div>
-
     <header class="topbar">
         <div class="brand">
             <span class="orb"></span>
@@ -48,19 +44,11 @@ requireLogin();
             <section class="card">
                 <h3>Etat de bord</h3>
                 <div class="table">
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <span>Profil</span><span class="badge">Actif</span>
-                    </div>
+                    <div><span>Profil</span> - <span class="badge">Actif</span></div>
                     <div class="divider"></div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <span>Mode</span><small>Eleve</small>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                        <span>Progression</span><small>Php</small>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>Action rapide</span><small><a class="inline-link" href="logout.php">Déconnexion</a></small>
-                    </div>
+                    <div><span>Mode</span> - <small>Eleve</small></div>
+                    <div><span>Progression</span> - <small>Php</small></div>
+                    <div><span>Action rapide</span> - <small><a class="inline-link" href="logout.php">Déconnexion</a></small></div>
                 </div>
             </section>
         </div>

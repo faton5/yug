@@ -12,6 +12,7 @@ $isAdmin = isAdmin(); // True si role_id = ROLE_ADMIN
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test role</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="topbar">

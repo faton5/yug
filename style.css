@@ -1,0 +1,75 @@
+﻿/* style.css - mise en forme basique, sans fioritures */
+
+:root {
+    --bg: #f5f5f5;
+    --card: #ffffff;
+    --text: #1d1d1d;
+    --muted: #555;
+    --border: #dcdcdc;
+    --primary: #2c6bed;
+    --danger: #c0392b;
+    --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+}
+header .brand { font-weight: bold; font-size: 18px; }
+header nav a { margin-left: 12px; }
+
+main.page {
+    padding: 24px 16px;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.grid-two { display: grid; gap: 20px; }
+.card, .hero, section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
+h2, h3 { margin-top: 0; }
+.eyebrow { text-transform: uppercase; font-size: 12px; color: var(--muted); letter-spacing: 0.05em; }
+
+form .field { display: flex; flex-direction: column; margin-bottom: 12px; }
+form label { font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+form input, form select { padding: 10px; border: 1px solid var(--border); border-radius: var(--radius); }
+
+.actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.btn { background: var(--primary); color: #fff; padding: 10px 14px; border: none; border-radius: var(--radius); cursor: pointer; }
+.btn.secondary { background: #e0e0e0; color: #000; }
+.btn.danger { background: var(--danger); color: #fff; }
+.btn:hover { opacity: 0.9; }
+
+.table { display: grid; gap: 8px; }
+.badge { background: #e0ecff; color: #1d3f8c; padding: 2px 6px; border-radius: var(--radius); font-size: 12px; }
+.divider { height: 1px; background: var(--border); margin: 4px 0; }
+.inline-link { color: var(--primary); }
+
+/* Tables simples */
+table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+th, td { border: 1px solid var(--border); padding: 8px; text-align: left; }
+th { background: #f0f0f0; }
+
+/* Messages */
+.errors { color: var(--danger); margin-bottom: 8px; }
+.success { color: #0a7c1f; margin-bottom: 8px; }
+
+/* Layout adaptatif */
+@media (min-width: 720px) {
+    .grid-two { grid-template-columns: 1fr 1fr; }
+}

@@ -1,17 +1,9 @@
-﻿# Delete Account PHP (login/register + rôles)
+﻿# PHP + html + css + js  (login/register + rôles)
 
 Application PHP simple (sans framework) : inscription/connexion avec regex de validation, rôles admin/user, gestion des utilisateurs par l’admin, suppression de compte et tableau de bord.
 
-## Prérequis
-- PHP 8+
-- MySQL/MariaDB
-- Serveur web local (ex : Laragon) pointant sur ce dossier
 
-## Installation
-1. Crée la base et importe le fichier SQL :
-   ```sql
-   SOURCE cour_login.sql;
-   ```
+# Db
    - Tables : `users` (avec `role_id`), `roles` (1 = admin, 2 = user).
 2. Configure l’accès BDD dans `fonctions.php` (host/db/user/pass, port 3306 par défaut).
 3. Place les fichiers dans le webroot et lance ton serveur (http://localhost/...).

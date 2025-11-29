@@ -4,7 +4,6 @@ require "fonctions.php";
 
 // Page d'inscription : crée un compte role user par défaut après validations
 $pdo = getDB();
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Récupération et nettoyage des champs
     $nom = trim($_POST['nom']);
@@ -44,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Yoann</title>
     <link rel="stylesheet" href="style.css">
+    <script src="asset/js/api.js" defer></script>
 </head>
 <body>
     <header class="topbar">
@@ -80,8 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input id="email" type="email" name="email" required>
                     </div>
                     <div class="field">
-                        <label for="adresse">Adresse physique</label>
-                        <input id="adresse" type="text" name="adresse" placeholder="N° et rue, ville" required>
+                        <label for="addressInput">Adresse physique</label>
+                        <input id="addressInput" type="text" name="adresse" placeholder="N° et rue, ville" required>
+                        <ul id="suggestions"></ul>
                     </div>
                     <div class="field">
                         <label for="password">Mot de passe</label>

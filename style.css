@@ -69,6 +69,9 @@ th { background: #f0f0f0; }
 .errors { color: var(--danger); margin-bottom: 8px; }
 .success { color: #0a7c1f; margin-bottom: 8px; }
 
+.image-row { display: flex; gap: 12px; flex-wrap: nowrap; overflow-x: auto; }
+.image-row img { flex: 0 0 30%; max-width: 30%; height: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+
 /* Layout adaptatif */
 @media (min-width: 720px) {
     .grid-two { grid-template-columns: 1fr 1fr; }
